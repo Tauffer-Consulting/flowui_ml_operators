@@ -1,0 +1,22 @@
+{
+    "name": "TextSummarizerOperator",
+    "description": "Text summarizer operator",
+    "dependency": {
+        "dockerfile": "Dockerfile_summarizer"
+    },
+    "container_resources": {
+        "use_gpu": true,
+        "requests": {
+            "cpu": "1000m",
+            "memory": "3Gi"
+        },
+        "limits": {
+            "cpu": "5000m",
+            "memory": "15Gi"
+        }
+    },
+    "style": {
+        "node_label": "Text Summarizer Operator",
+        "icon_class_name": "fa-solid fa-quote-left"
+    }
+}
