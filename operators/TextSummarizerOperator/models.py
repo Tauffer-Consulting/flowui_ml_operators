@@ -12,7 +12,7 @@ class InputModel(BaseModel):
     """
     Input data for TextSummarizerOperator
     """
-    input_file_path: Union[FilePath, str] = Field(
+    input_file_path: str = Field(
         description='The path to the text file to summarize.',
         default=""
     )
@@ -42,7 +42,7 @@ class OutputModel(BaseModel):
         default="",
         description="The result summarized text."
     )
-    file_path: Union[FilePath, str] = Field(
+    file_path: FilePath = Field(
         default="",
         description="The path to the resulting summarized text file."
     )
