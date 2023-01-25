@@ -22,7 +22,7 @@ class WhisperOperator(BaseOperator):
             self.logger.info("Transcription complete successfully. Result returned as file.")
             msg = f"Transcription complete successfully. Result returned as file."
             transcription_result = ""
-            output_file_path = "transcription_result.txt"
+            output_file_path = f"{self.results_path}/transcription_result.txt"
             with open(output_file_path, "w") as f:
                 f.write(result)
 
