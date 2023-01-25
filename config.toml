@@ -1,5 +1,5 @@
 [repository]
-REPOSITORY_NAME = "ML Operators"
+REPOSITORY_NAME = "ml_operators"
 VERSION = "0.1.0"
 
 [dockerhub]

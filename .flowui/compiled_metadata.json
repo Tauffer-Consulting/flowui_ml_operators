@@ -1,135 +1,84 @@
 {
-    "ExampleComplexOperator": {
-        "name": "ExampleComplexOperator",
+    "TextSummarizerOperator": {
+        "name": "TextSummarizerOperator",
         "dependency": {
             "docker_image": null,
-            "dockerfile": "Dockerfile_1",
+            "dockerfile": "Dockerfile_summarizer",
             "requirements_file": null
         },
-        "tags": [
-            "Example"
-        ],
+        "tags": [],
         "style": {
-            "node_label": "Complex Operator",
+            "node_label": "Text Summarizer Operator",
             "node_type": "default",
             "node_style": {
                 "backgroundColor": "#ebebeb"
             },
             "useIcon": true,
-            "icon_class_name": "fas fa-database",
+            "icon_class_name": "fa-solid fa-quote-left",
             "iconStyle": {
                 "cursor": "pointer"
             }
         },
-        "description": "This is an example of a complex FlowUI Operator",
-        "input_schema": {
-            "title": "InputModel",
-            "type": "object",
-            "properties": {
-                "arg1": {
-                    "title": "Arg1",
-                    "description": "Distribution mean",
-                    "type": "string"
-                }
+        "description": "Text summarizer operator",
+        "container_resources": {
+            "use_gpu": true,
+            "requests": {
+                "cpu": "1000m",
+                "memory": "3Gi"
             },
-            "required": [
-                "arg1"
-            ]
-        },
-        "output_schema": {
-            "title": "OutputModel",
-            "type": "object",
-            "properties": {
-                "message": {
-                    "title": "Message",
-                    "description": "Output message to log",
-                    "type": "string"
-                },
-                "result": {
-                    "title": "Result",
-                    "description": "The result of this Operator's processing",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "message",
-                "result"
-            ]
-        },
-        "secrets_schema": {
-            "title": "SecretsModel",
-            "type": "object",
-            "properties": {
-                "EXAMPLE_OPERATOR_SECRET_2": {
-                    "title": "Example Operator Secret 2",
-                    "description": "A secret necessary to run this Operator",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "EXAMPLE_OPERATOR_SECRET_2"
-            ]
-        }
-    },
-    "ExampleSimpleOperator": {
-        "name": "ExampleSimpleOperator",
-        "dependency": {
-            "docker_image": null,
-            "dockerfile": null,
-            "requirements_file": "requirements_0.txt"
-        },
-        "tags": [
-            "Example"
-        ],
-        "style": {
-            "node_label": "Simple Operator",
-            "node_type": "default",
-            "node_style": {
-                "backgroundColor": "#ebebeb"
-            },
-            "useIcon": true,
-            "icon_class_name": "fas fa-database",
-            "iconStyle": {
-                "cursor": "pointer"
+            "limits": {
+                "cpu": "5000m",
+                "memory": "15Gi"
             }
         },
-        "description": "This is an example of a simple FlowUI Operator",
         "input_schema": {
             "title": "InputModel",
+            "description": "Input data for TextSummarizerOperator",
             "type": "object",
             "properties": {
-                "distribution_name": {
-                    "description": "Name of the distribution to sample from",
-                    "allOf": [
+                "input_file_path": {
+                    "title": "Input File Path",
+                    "description": "The path to the text file to summarize.",
+                    "default": "",
+                    "anyOf": [
                         {
-                            "$ref": "#/definitions/DistributionType"
+                            "type": "string",
+                            "format": "file-path"
+                        },
+                        {
+                            "type": "string"
                         }
                     ]
                 },
-                "distribution_mean": {
-                    "title": "Distribution Mean",
-                    "description": "Distribution mean",
-                    "type": "number"
+                "input_text": {
+                    "title": "Input Text",
+                    "description": "The text to summarize.",
+                    "default": "",
+                    "type": "string"
                 },
-                "distribution_sd": {
-                    "title": "Distribution Sd",
-                    "description": "Distribution standard deviation",
-                    "default": 1.0,
-                    "exclusiveMinimum": 0.0,
-                    "type": "number"
+                "output_type": {
+                    "description": "The type of output fot the result text.",
+                    "default": "xcom",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/OutputTypeType"
+                        }
+                    ]
+                },
+                "use_gpu": {
+                    "title": "Use Gpu",
+                    "description": "Use GPU for inference.",
+                    "default": false,
+                    "type": "boolean"
                 }
             },
-            "required": [
-                "distribution_name",
-                "distribution_mean"
-            ],
             "definitions": {
-                "DistributionType": {
-                    "title": "DistributionType",
+                "OutputTypeType": {
+                    "title": "OutputTypeType",
                     "description": "An enumeration.",
                     "enum": [
-                        "gaussian",
-                        "poisson"
+                        "xcom",
+                        "file"
                     ],
                     "type": "string"
                 }
@@ -137,37 +86,168 @@
         },
         "output_schema": {
             "title": "OutputModel",
+            "description": "Output data for TextSummarizerOperator",
             "type": "object",
             "properties": {
                 "message": {
                     "title": "Message",
-                    "description": "Output message to log",
+                    "description": "Output message to log.",
+                    "default": "",
                     "type": "string"
                 },
-                "sample_result": {
-                    "title": "Sample Result",
-                    "description": "The result of this Operator's processing",
+                "summary_result": {
+                    "title": "Summary Result",
+                    "description": "The result summarized text.",
+                    "default": "",
                     "type": "string"
+                },
+                "file_path": {
+                    "title": "File Path",
+                    "description": "The path to the resulting summarized text file.",
+                    "default": "",
+                    "anyOf": [
+                        {
+                            "type": "string",
+                            "format": "file-path"
+                        },
+                        {
+                            "type": "string"
+                        }
+                    ]
                 }
-            },
-            "required": [
-                "message",
-                "sample_result"
-            ]
+            }
         },
-        "secrets_schema": {
-            "title": "SecretsModel",
+        "secrets_schema": null
+    },
+    "WhisperOperator": {
+        "name": "WhisperOperator",
+        "dependency": {
+            "docker_image": null,
+            "dockerfile": "Dockerfile_whisper",
+            "requirements_file": null
+        },
+        "tags": [],
+        "style": {
+            "node_label": "Wisper Operator",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-solid fa-comment-dots",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "description": "Whisper is a general-purpose speech recognition model. Ref: https://github.com/openai/whisper",
+        "container_resources": {
+            "use_gpu": true,
+            "requests": {
+                "cpu": "1000m",
+                "memory": "3Gi"
+            },
+            "limits": {
+                "cpu": "5000m",
+                "memory": "15Gi"
+            }
+        },
+        "input_schema": {
+            "title": "InputModel",
+            "description": "Input data for WhisperOperator",
             "type": "object",
             "properties": {
-                "EXAMPLE_OPERATOR_SECRET_1": {
-                    "title": "Example Operator Secret 1",
-                    "description": "A secret necessary to run this Operator",
-                    "type": "string"
+                "file_path": {
+                    "title": "File Path",
+                    "description": "The path to the text file to process.",
+                    "anyOf": [
+                        {
+                            "type": "string",
+                            "format": "file-path"
+                        },
+                        {
+                            "type": "string"
+                        }
+                    ]
+                },
+                "model_size": {
+                    "description": "The size of the model to use.",
+                    "default": "base",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/ModelSizeType"
+                        }
+                    ]
+                },
+                "output_type": {
+                    "description": "The type of output fot the result text.",
+                    "default": "xcom",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/OutputTypeType"
+                        }
+                    ]
                 }
             },
             "required": [
-                "EXAMPLE_OPERATOR_SECRET_1"
-            ]
-        }
+                "file_path"
+            ],
+            "definitions": {
+                "ModelSizeType": {
+                    "title": "ModelSizeType",
+                    "description": "An enumeration.",
+                    "enum": [
+                        "tiny",
+                        "base",
+                        "small",
+                        "medium",
+                        "large"
+                    ],
+                    "type": "string"
+                },
+                "OutputTypeType": {
+                    "title": "OutputTypeType",
+                    "description": "An enumeration.",
+                    "enum": [
+                        "xcom",
+                        "file"
+                    ],
+                    "type": "string"
+                }
+            }
+        },
+        "output_schema": {
+            "title": "OutputModel",
+            "description": "Output data for WhisperOperator",
+            "type": "object",
+            "properties": {
+                "message": {
+                    "title": "Message",
+                    "description": "Output message to log.",
+                    "default": "",
+                    "type": "string"
+                },
+                "transcription_result": {
+                    "title": "Transcription Result",
+                    "description": "The result transcription text.",
+                    "default": "",
+                    "type": "string"
+                },
+                "file_path": {
+                    "title": "File Path",
+                    "description": "The path to the results text file.",
+                    "default": "",
+                    "anyOf": [
+                        {
+                            "type": "string",
+                            "format": "file-path"
+                        },
+                        {
+                            "type": "string"
+                        }
+                    ]
+                }
+            }
+        },
+        "secrets_schema": null
     }
 }

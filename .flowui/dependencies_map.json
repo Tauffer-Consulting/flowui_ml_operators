@@ -1,30 +1,24 @@
 {
-    "template_operators_flowui_dependency_0": {
+    "ml_operators_image_0": {
         "dependency": {
             "docker_image": null,
-            "dockerfile": "Dockerfile_1",
+            "dockerfile": "Dockerfile_summarizer",
             "requirements_file": null
         },
         "operators": [
-            "ExampleComplexOperator"
+            "TextSummarizerOperator"
         ],
-        "secrets": [
-            "EXAMPLE_OPERATOR_SECRET_2"
-        ],
-        "source_image": "taufferconsulting/template_operators_flowui_dependency_0:0.1.0"
+        "secrets": []
     },
-    "template_operators_flowui_dependency_1": {
+    "ml_operators_image_1": {
         "dependency": {
             "docker_image": null,
-            "dockerfile": null,
-            "requirements_file": "requirements_0.txt"
+            "dockerfile": "Dockerfile_whisper",
+            "requirements_file": null
         },
         "operators": [
-            "ExampleSimpleOperator"
+            "WhisperOperator"
         ],
-        "secrets": [
-            "EXAMPLE_OPERATOR_SECRET_1"
-        ],
-        "source_image": "taufferconsulting/template_operators_flowui_dependency_1:0.1.0"
+        "secrets": []
     }
 }
