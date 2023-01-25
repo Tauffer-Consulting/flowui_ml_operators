@@ -75,7 +75,7 @@ class TextSummarizerOperator(BaseOperator):
             self.logger.info("Sumamrization completed successfully. Result returned as file.")
             msg = f"Summarization completed successfully. Result returned as file."
             summary_result = ""
-            output_file_path = "summary_result.txt"
+            output_file_path = f"{self.results_path}/summary_result.txt"
             with open(output_file_path, "w") as f:
                 f.write(result)
 
