@@ -8,8 +8,7 @@
         "operators": [
             "TextSummarizerOperator"
         ],
-        "secrets": [],
-        "source_image": "taufferconsulting/ml_operators_image_0:0.1.0"
+        "secrets": []
     },
     "ml_operators_image_1": {
         "dependency": {
@@ -20,7 +19,6 @@
         "operators": [
             "WhisperOperator"
         ],
-        "secrets": [],
-        "source_image": "taufferconsulting/ml_operators_image_1:0.1.0"
+        "secrets": []
     }
 }

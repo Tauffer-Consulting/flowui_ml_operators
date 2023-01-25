@@ -20,7 +20,7 @@ class InputModel(BaseModel):
     """
     Input data for WhisperOperator
     """
-    file_path: Union[FilePath, str] = Field(
+    file_path: str = Field(
         description='The path to the text file to process.',
     )
     model_size: ModelSizeType = Field(
@@ -45,7 +45,7 @@ class OutputModel(BaseModel):
         default="",
         description="The result transcription text."
     )
-    file_path: Union[FilePath, str] = Field(
+    file_path: FilePath = Field(
         default="",
         description="The path to the results text file."
     )

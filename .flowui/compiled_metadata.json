@@ -159,15 +159,7 @@
                 "file_path": {
                     "title": "File Path",
                     "description": "The path to the text file to process.",
-                    "anyOf": [
-                        {
-                            "type": "string",
-                            "format": "file-path"
-                        },
-                        {
-                            "type": "string"
-                        }
-                    ]
+                    "type": "string"
                 },
                 "model_size": {
                     "description": "The size of the model to use.",
@@ -236,15 +228,8 @@
                     "title": "File Path",
                     "description": "The path to the results text file.",
                     "default": "",
-                    "anyOf": [
-                        {
-                            "type": "string",
-                            "format": "file-path"
-                        },
-                        {
-                            "type": "string"
-                        }
-                    ]
+                    "format": "file-path",
+                    "type": "string"
                 }
             }
         },
